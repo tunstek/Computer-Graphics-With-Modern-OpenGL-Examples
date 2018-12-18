@@ -16,6 +16,7 @@
 
 // window dimensions
 const GLint WIDTH = 800, HEIGHT = 600;
+const float toRadians = 3.14159265358f / 180.0f;
 
 GLuint VAO, VBO, shader, uniformModel; // the relevant IDs
 
@@ -193,8 +194,11 @@ int main() {
         glUseProgram(shader);
         
         glm::mat4 model = glm::mat4(0.1);
-        
+            // add any translations, rotations or scaling here, no need to touch the shaders
+            model = glm::rotate(model, 45*toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); // rotate around the z axis
+            // above requires projection to rotate around the 'world' as opposed to the window it's in
             model = glm::translate(model, glm::vec3(triOffset, 0.0f, 0.0f));
+        
         
             glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
         
