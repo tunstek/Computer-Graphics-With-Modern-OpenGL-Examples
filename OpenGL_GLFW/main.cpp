@@ -18,7 +18,7 @@
 const GLint WIDTH = 800, HEIGHT = 600;
 const float toRadians = 3.14159265358f / 180.0f;
 
-GLuint VAO, VBO, shader, uniformModel; // the relevant IDs
+GLuint VAO, VBO, IBO, shader, uniformModel; // the relevant IDs
 
 bool direction = true; // direction to move triangle. true - right,  false - left
 float triOffset = 0.0f;
@@ -51,6 +51,7 @@ vColor = vec4(clamp(pos, 0.0f, 1.0f), 1.0f);        \n\
 
 /*
     Fragment Shader
+     - Handles each individual pixel and interpolates the values
  */
 static const char* fShader = "                      \n\
 #version 330                                        \n\
@@ -62,21 +63,42 @@ color = vColor;                                     \n\
 
 
 void createTriangle() {
+    
+    unsigned int indices[] = {
+        0, 3, 1, // side 1
+        1, 3, 3, // side 2
+        2, 3, 1, // front facing triangle
+        0, 1, 2  // base of triange
+    };
+    
     // center of screen is 0.0
     GLfloat vertices[] = {
         -1.0f, -1.0f, 0.0f,
+        0.0f, -1.0f, 1.0f,
         1.0f, -1.0f, 0.0f,
         0.0f, 1.0f, 0.0f
     };
     glGenVertexArrays(1, &VAO); // creates a VAO array on the GPU and stores the ID in VAO
     glBindVertexArray(VAO);
-        glGenBuffers(1, &VBO); // creates a buffer object and stores the ID in VBO
-        glBindBuffer(GL_ARRAY_BUFFER, VBO); // bind the buffers
-            glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW); // not changing the values in the array
-            glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0); // chunks of 3 values
-            glEnableVertexAttribArray(0);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
+    
+    glGenBuffers(1, &IBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+    
+    glGenBuffers(1, &VBO); // creates a buffer object and stores the ID in VBO
+    glBindBuffer(GL_ARRAY_BUFFER, VBO); // bind the buffers
+    
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW); // not changing the values in the array
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0); // chunks of 3 values
+    glEnableVertexAttribArray(0);
+    
+    // unbind array buffer
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    
     glBindVertexArray(VAO);
+    
+    // unbind element/index array buffer (should happen AFTER unbinding VAO)
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
 
@@ -185,6 +207,11 @@ int main() {
         return -1;
     }
     
+    
+    // enable OpenGL Features
+    glEnable(GL_DEPTH_TEST);
+    
+    
     // Create viewport
     glViewport(0, 0, bufferWidth, bufferHeight);
     
@@ -221,26 +248,32 @@ int main() {
             scaleDirection = !scaleDirection;
         }
         
+        // clear the window
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
         glUseProgram(shader);
         
         glm::mat4 model = glm::mat4(0.1);
-            // add any translations, rotations or scaling here, no need to touch the shaders
-            // order can be thought of as happening in reverse
-            //model = glm::translate(model, glm::vec3(triOffset, 0.0f, 0.0f));
-            //model = glm::rotate(model, currentAngle*toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); // rotate around the z axis
-            /* above requires projection to rotate around the 'world' as opposed to the window it's in */
         
-            model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f)); // usually scale 'first'
+        // add any translations, rotations or scaling here, no need to touch the shaders
+        // order can be thought of as happening in reverse
+        //model = glm::translate(model, glm::vec3(triOffset, 0.0f, 0.0f));
+        model = glm::rotate(model, currentAngle*toRadians, glm::vec3(0.0f, 1.0f, 0.0f)); // rotate around the z axis
+        /* above requires projection to rotate around the 'world' as opposed to the window it's in */
+        
+        model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f)); // usually scale 'first'
         
         
-            glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+        glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
         
-            glBindVertexArray(VAO);
-                glDrawArrays(GL_TRIANGLES, 0, 3);
-            glBindVertexArray(0);
+        glBindVertexArray(VAO);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
+        
+        glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, 0);
+        
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+        glBindVertexArray(0);
         
         glUseProgram(0);
         
