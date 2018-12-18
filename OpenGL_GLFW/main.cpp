@@ -18,7 +18,7 @@
 const GLint WIDTH = 800, HEIGHT = 600;
 const float toRadians = 3.14159265358f / 180.0f;
 
-GLuint VAO, VBO, IBO, shader, uniformModel; // the relevant IDs
+GLuint VAO, VBO, IBO, shader, uniformModel, uniformProjection; // the relevant IDs
 
 bool direction = true; // direction to move triangle. true - right,  false - left
 float triOffset = 0.0f;
@@ -43,8 +43,9 @@ static const char* vShader = "                      \n\
 layout (location = 0) in vec3 pos;                  \n\
 out vec4 vColor;                                    \n\
 uniform mat4 model;                                 \n\
+uniform mat4 projection;                            \n\
 void main() {                                       \n\
-gl_Position = model * vec4(pos, 1.0);               \n\
+gl_Position = projection * model * vec4(pos, 1.0);               \n\
 vColor = vec4(clamp(pos, 0.0f, 1.0f), 1.0f);        \n\
 }";
 
@@ -166,8 +167,9 @@ void compileShaders() {
     }
     std::cout << "Complete." << std::endl;
     
-    // get the uniform shader variable
+    // get the uniform shader variables
     uniformModel = glGetUniformLocation(shader, "model");
+    uniformProjection = glGetUniformLocation(shader, "projection");
     
 }
 
@@ -218,6 +220,9 @@ int main() {
     createTriangle();
     compileShaders();
     
+    // create Projection
+    glm::mat4 projection = glm::perspective(45.0f, (GLfloat)bufferWidth/(GLfloat)bufferHeight, 0.1f, 100.0f);
+    
     // loop until the window is closed
     while(!glfwWindowShouldClose(window)) {
         glfwPollEvents();
@@ -258,7 +263,7 @@ int main() {
         
         // add any translations, rotations or scaling here, no need to touch the shaders
         // order can be thought of as happening in reverse
-        //model = glm::translate(model, glm::vec3(triOffset, 0.0f, 0.0f));
+        model = glm::translate(model, glm::vec3(0.0f, triOffset, -2.5f));
         model = glm::rotate(model, currentAngle*toRadians, glm::vec3(0.0f, 1.0f, 0.0f)); // rotate around the z axis
         /* above requires projection to rotate around the 'world' as opposed to the window it's in */
         
@@ -266,6 +271,7 @@ int main() {
         
         
         glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+        glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection));
         
         glBindVertexArray(VAO);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
