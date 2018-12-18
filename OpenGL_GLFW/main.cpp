@@ -25,6 +25,8 @@ float triOffset = 0.0f;
 float triMaxOffset = 0.7f;
 float triIncrement = 0.0001f;
 
+float currentAngle = 0.0f;
+
 
 // Vertex Shader
 static const char* vShader = "                      \n\
@@ -188,6 +190,11 @@ int main() {
             direction  = !direction;
         }
         
+        currentAngle += 0.01f;
+        if(currentAngle >= 360) {
+            currentAngle -= 360;
+        }
+        
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         
@@ -195,9 +202,10 @@ int main() {
         
         glm::mat4 model = glm::mat4(0.1);
             // add any translations, rotations or scaling here, no need to touch the shaders
-            model = glm::rotate(model, 45*toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); // rotate around the z axis
-            // above requires projection to rotate around the 'world' as opposed to the window it's in
+            // order can be thought of as happening in reverse
             model = glm::translate(model, glm::vec3(triOffset, 0.0f, 0.0f));
+            model = glm::rotate(model, currentAngle*toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); // rotate around the z axis
+            // above requires projection to rotate around the 'world' as opposed to the window it's in
         
         
             glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
