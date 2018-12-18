@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		53A7E555215159AA002CDA17 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 53A7E554215159AA002CDA17 /* main.cpp */; };
+		53A7E55D21515A6C002CDA17 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53A7E55C21515A6C002CDA17 /* OpenGL.framework */; };
+		53A7E55F21515A96002CDA17 /* libGLEW.2.1.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 53A7E55E21515A96002CDA17 /* libGLEW.2.1.0.dylib */; };
+		53A7E56121515AB1002CDA17 /* libglfw.3.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 53A7E56021515AB1002CDA17 /* libglfw.3.2.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +28,9 @@
 /* Begin PBXFileReference section */
 		53A7E551215159AA002CDA17 /* OpenGL GLFW */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "OpenGL GLFW"; sourceTree = BUILT_PRODUCTS_DIR; };
 		53A7E554215159AA002CDA17 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		53A7E55C21515A6C002CDA17 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		53A7E55E21515A96002CDA17 /* libGLEW.2.1.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEW.2.1.0.dylib; path = ../../../../../../../usr/local/Cellar/glew/2.1.0/lib/libGLEW.2.1.0.dylib; sourceTree = "<group>"; };
+		53A7E56021515AB1002CDA17 /* libglfw.3.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.2.dylib; path = ../../../../../../../usr/local/Cellar/glfw/3.2.1/lib/libglfw.3.2.dylib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +38,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53A7E56121515AB1002CDA17 /* libglfw.3.2.dylib in Frameworks */,
+				53A7E55F21515A96002CDA17 /* libGLEW.2.1.0.dylib in Frameworks */,
+				53A7E55D21515A6C002CDA17 /* OpenGL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -41,8 +50,9 @@
 		53A7E548215159AA002CDA17 = {
 			isa = PBXGroup;
 			children = (
-				53A7E553215159AA002CDA17 /* OpenGL GLFW */,
+				53A7E553215159AA002CDA17 /* OpenGL_GLFW */,
 				53A7E552215159AA002CDA17 /* Products */,
+				53A7E55B21515A6C002CDA17 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,12 +64,22 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		53A7E553215159AA002CDA17 /* OpenGL GLFW */ = {
+		53A7E553215159AA002CDA17 /* OpenGL_GLFW */ = {
 			isa = PBXGroup;
 			children = (
 				53A7E554215159AA002CDA17 /* main.cpp */,
 			);
-			path = "OpenGL GLFW";
+			path = OpenGL_GLFW;
+			sourceTree = "<group>";
+		};
+		53A7E55B21515A6C002CDA17 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				53A7E56021515AB1002CDA17 /* libglfw.3.2.dylib */,
+				53A7E55E21515A96002CDA17 /* libGLEW.2.1.0.dylib */,
+				53A7E55C21515A6C002CDA17 /* OpenGL.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -96,7 +116,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 53A7E54C215159AA002CDA17 /* Build configuration list for PBXProject "OpenGL GLFW" */;
+			buildConfigurationList = 53A7E54C215159AA002CDA17 /* Build configuration list for PBXProject "OpenGL_GLFW" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -238,6 +258,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/Cellar/glew/2.1.0/lib,
+					/usr/local/Cellar/glfw/3.2.1/lib,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -246,6 +272,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/Cellar/glew/2.1.0/lib,
+					/usr/local/Cellar/glfw/3.2.1/lib,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -253,7 +285,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		53A7E54C215159AA002CDA17 /* Build configuration list for PBXProject "OpenGL GLFW" */ = {
+		53A7E54C215159AA002CDA17 /* Build configuration list for PBXProject "OpenGL_GLFW" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				53A7E556215159AA002CDA17 /* Debug */,
