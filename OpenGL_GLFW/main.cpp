@@ -27,23 +27,39 @@ float triIncrement = 0.0001f;
 
 float currentAngle = 0.0f;
 
+bool scaleDirection = true;
+float currentScale = 0.4f;
+float maxScale = 0.8f;
+float minScale = 0.1f;
+float scaleIncrement = 0.0001f;
 
-// Vertex Shader
+
+/*
+    Vertex Shader
+     - clamp - fixes values outside of the constraints (0 and 1)
+*/
 static const char* vShader = "                      \n\
 #version 330                                        \n\
 layout (location = 0) in vec3 pos;                  \n\
+out vec4 vColor;                                    \n\
 uniform mat4 model;                                 \n\
 void main() {                                       \n\
-gl_Position = model * vec4(0.4*pos.x, 0.4*pos.y, pos.z, 1.0);       \n\
+gl_Position = model * vec4(pos, 1.0);               \n\
+vColor = vec4(clamp(pos, 0.0f, 1.0f), 1.0f);        \n\
 }";
 
-// Fragment Shader
+
+/*
+    Fragment Shader
+ */
 static const char* fShader = "                      \n\
 #version 330                                        \n\
+in vec4 vColor;                                     \n\
 out vec4 color;                                     \n\
 void main() {                                       \n\
-color = vec4(1.0, 0.0, 0.0, 1.0);                   \n\
+color = vColor;                                     \n\
 }";
+
 
 void createTriangle() {
     // center of screen is 0.0
@@ -195,6 +211,16 @@ int main() {
             currentAngle -= 360;
         }
         
+        if(scaleDirection) {
+            currentScale += scaleIncrement;
+        }
+        else {
+            currentScale -= scaleIncrement;
+        }
+        if(currentScale >= maxScale || currentScale <= minScale) {
+            scaleDirection = !scaleDirection;
+        }
+        
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         
@@ -203,9 +229,11 @@ int main() {
         glm::mat4 model = glm::mat4(0.1);
             // add any translations, rotations or scaling here, no need to touch the shaders
             // order can be thought of as happening in reverse
-            model = glm::translate(model, glm::vec3(triOffset, 0.0f, 0.0f));
-            model = glm::rotate(model, currentAngle*toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); // rotate around the z axis
-            // above requires projection to rotate around the 'world' as opposed to the window it's in
+            //model = glm::translate(model, glm::vec3(triOffset, 0.0f, 0.0f));
+            //model = glm::rotate(model, currentAngle*toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); // rotate around the z axis
+            /* above requires projection to rotate around the 'world' as opposed to the window it's in */
+        
+            model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f)); // usually scale 'first'
         
         
             glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
