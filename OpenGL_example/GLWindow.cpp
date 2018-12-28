@@ -86,10 +86,12 @@ int GLWindow::init() {
 
 void GLWindow::createCallbacks() {
     glfwSetKeyCallback(mainWindow, handleKeys);
+    glfwSetCursorPosCallback(mainWindow, handleMouse);
 }
 
 
 void GLWindow::handleKeys(GLFWwindow* window, int key, int code, int action, int mode) {
+    // get the focused window
     GLWindow* theWindow = static_cast<GLWindow*>(glfwGetWindowUserPointer(window));
     
     if(key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
@@ -98,14 +100,33 @@ void GLWindow::handleKeys(GLFWwindow* window, int key, int code, int action, int
     if(key >= 0 && key < 1024) {
         //valid key
         if(action == GLFW_PRESS) {
-            std::cout << "Pressed: " << key << std::endl;
             theWindow->keys[key] = true;
         }
         else if(action == GLFW_RELEASE) {
-            std::cout << "Released: " << key << std::endl;
             theWindow->keys[key] = false;
         }
     }
+}
+
+
+void GLWindow::handleMouse(GLFWwindow* window, double xPos, double yPos) {
+    // get the focused window
+    GLWindow* theWindow = static_cast<GLWindow*>(glfwGetWindowUserPointer(window));
+    
+    if(theWindow->mouseFirstMove) {
+        // the mouse has not yet been moved, avoids sharp jerks on initial statup
+        theWindow->lastMouseX = xPos;
+        theWindow->lastMouseY = yPos;
+        theWindow->mouseFirstMove = false;
+    }
+    
+    theWindow->deltaMouseX = xPos - theWindow->lastMouseX;
+    theWindow->deltaMouseY = theWindow->lastMouseY - yPos; // swap to invert the movement
+    
+    theWindow->lastMouseX = xPos;
+    theWindow->lastMouseY = yPos;
+    
+    printf("x:%.6f y:%.6f\n", xPos, yPos);
 }
 
 

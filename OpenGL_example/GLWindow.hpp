@@ -37,8 +37,12 @@ private:
     
     bool keys[1024];
     
+    GLfloat lastMouseX, lastMouseY, deltaMouseX, deltaMouseY;
+    bool mouseFirstMove;
+    
     void createCallbacks();
     static void handleKeys(GLFWwindow* window, int key, int code, int action, int mode);
+    static void handleMouse(GLFWwindow* window, double xPos, double yPos);
 };
 
 #endif /* GLWindow_hpp */
