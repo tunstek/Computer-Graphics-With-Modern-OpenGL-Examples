@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5373705621D384480027E27C /* Mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5373705421D384480027E27C /* Mesh.cpp */; };
+		5373705921D3D2AA0027E27C /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5373705721D3D2AA0027E27C /* Shader.cpp */; };
+		5373705F21D3DC3B0027E27C /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5373705D21D3DC3B0027E27C /* Utils.cpp */; };
+		5373706721D4D7180027E27C /* GLWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5373706521D4D7180027E27C /* GLWindow.cpp */; };
 		53A7E555215159AA002CDA17 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 53A7E554215159AA002CDA17 /* main.cpp */; };
 		53A7E55D21515A6C002CDA17 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53A7E55C21515A6C002CDA17 /* OpenGL.framework */; };
 		53A7E55F21515A96002CDA17 /* libGLEW.2.1.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 53A7E55E21515A96002CDA17 /* libGLEW.2.1.0.dylib */; };
@@ -26,6 +30,16 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5373705421D384480027E27C /* Mesh.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Mesh.cpp; sourceTree = "<group>"; };
+		5373705521D384480027E27C /* Mesh.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Mesh.hpp; sourceTree = "<group>"; };
+		5373705721D3D2AA0027E27C /* Shader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Shader.cpp; sourceTree = "<group>"; };
+		5373705821D3D2AA0027E27C /* Shader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Shader.hpp; sourceTree = "<group>"; };
+		5373705D21D3DC3B0027E27C /* Utils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Utils.cpp; sourceTree = "<group>"; };
+		5373705E21D3DC3B0027E27C /* Utils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Utils.hpp; sourceTree = "<group>"; };
+		5373706021D4D1940027E27C /* vert.shader */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = vert.shader; sourceTree = "<group>"; };
+		5373706121D4D1940027E27C /* frag.shader */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = frag.shader; sourceTree = "<group>"; };
+		5373706521D4D7180027E27C /* GLWindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GLWindow.cpp; sourceTree = "<group>"; };
+		5373706621D4D7180027E27C /* GLWindow.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GLWindow.hpp; sourceTree = "<group>"; };
 		53A7E551215159AA002CDA17 /* OpenGL GLFW */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "OpenGL GLFW"; sourceTree = BUILT_PRODUCTS_DIR; };
 		53A7E554215159AA002CDA17 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		53A7E55C21515A6C002CDA17 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
@@ -47,10 +61,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5373705A21D3DABD0027E27C /* shaders */ = {
+			isa = PBXGroup;
+			children = (
+				5373706121D4D1940027E27C /* frag.shader */,
+				5373706021D4D1940027E27C /* vert.shader */,
+			);
+			path = shaders;
+			sourceTree = "<group>";
+		};
 		53A7E548215159AA002CDA17 = {
 			isa = PBXGroup;
 			children = (
-				53A7E553215159AA002CDA17 /* OpenGL_GLFW */,
+				53A7E553215159AA002CDA17 /* OpenGL_example */,
 				53A7E552215159AA002CDA17 /* Products */,
 				53A7E55B21515A6C002CDA17 /* Frameworks */,
 			);
@@ -64,12 +87,21 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		53A7E553215159AA002CDA17 /* OpenGL_GLFW */ = {
+		53A7E553215159AA002CDA17 /* OpenGL_example */ = {
 			isa = PBXGroup;
 			children = (
 				53A7E554215159AA002CDA17 /* main.cpp */,
+				5373706521D4D7180027E27C /* GLWindow.cpp */,
+				5373706621D4D7180027E27C /* GLWindow.hpp */,
+				5373705721D3D2AA0027E27C /* Shader.cpp */,
+				5373705D21D3DC3B0027E27C /* Utils.cpp */,
+				5373705E21D3DC3B0027E27C /* Utils.hpp */,
+				5373705821D3D2AA0027E27C /* Shader.hpp */,
+				5373705421D384480027E27C /* Mesh.cpp */,
+				5373705521D384480027E27C /* Mesh.hpp */,
+				5373705A21D3DABD0027E27C /* shaders */,
 			);
-			path = OpenGL_GLFW;
+			path = OpenGL_example;
 			sourceTree = "<group>";
 		};
 		53A7E55B21515A6C002CDA17 /* Frameworks */ = {
@@ -116,7 +148,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 53A7E54C215159AA002CDA17 /* Build configuration list for PBXProject "OpenGL_GLFW" */;
+			buildConfigurationList = 53A7E54C215159AA002CDA17 /* Build configuration list for PBXProject "OpenGL_example" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -138,7 +170,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5373705621D384480027E27C /* Mesh.cpp in Sources */,
+				5373705921D3D2AA0027E27C /* Shader.cpp in Sources */,
+				5373706721D4D7180027E27C /* GLWindow.cpp in Sources */,
 				53A7E555215159AA002CDA17 /* main.cpp in Sources */,
+				5373705F21D3DC3B0027E27C /* Utils.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -285,7 +321,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		53A7E54C215159AA002CDA17 /* Build configuration list for PBXProject "OpenGL_GLFW" */ = {
+		53A7E54C215159AA002CDA17 /* Build configuration list for PBXProject "OpenGL_example" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				53A7E556215159AA002CDA17 /* Debug */,

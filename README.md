@@ -1,1 +1,1 @@
-From: https://www.udemy.com/graphics-with-modern-opengl/
+Notes From: https://www.udemy.com/graphics-with-modern-opengl/
