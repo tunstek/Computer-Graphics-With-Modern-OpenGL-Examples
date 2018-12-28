@@ -59,6 +59,7 @@ int GLWindow::init() {
     
     // handle key and mouse input
     createCallbacks();
+    glfwSetInputMode(mainWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED); // disable the cursor
     
     
     glewExperimental = GL_TRUE; // enable modern GLEW features
@@ -87,6 +88,20 @@ int GLWindow::init() {
 void GLWindow::createCallbacks() {
     glfwSetKeyCallback(mainWindow, handleKeys);
     glfwSetCursorPosCallback(mainWindow, handleMouse);
+}
+
+GLfloat GLWindow::getDeltaMouseX() {
+    GLfloat delta = deltaMouseX;
+    // reset to 0
+    deltaMouseX = 0.0f;
+    return delta;
+}
+
+GLfloat GLWindow::getDeltaMouseY() {
+    GLfloat delta = deltaMouseY;
+    // reset to 0
+    deltaMouseY = 0.0f;
+    return delta;
 }
 
 
@@ -125,8 +140,6 @@ void GLWindow::handleMouse(GLFWwindow* window, double xPos, double yPos) {
     
     theWindow->lastMouseX = xPos;
     theWindow->lastMouseY = yPos;
-    
-    printf("x:%.6f y:%.6f\n", xPos, yPos);
 }
 
 

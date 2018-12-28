@@ -17,16 +17,17 @@
 #include "GLWindow.hpp"
 #include "Mesh.hpp"
 #include "Shader.hpp"
+#include "Camera.hpp"
 #include "Utils.hpp"
 
 
 GLWindow mainWindow;
 // window dimensions
 const GLint WINDOW_WIDTH = 800, WINDOW_HEIGHT = 600;
-const float toRadians = 3.14159265358f / 180.0f;
 
 std::vector<Mesh*> meshList;
 std::vector<Shader> shaderList;
+Camera camera;
 
 
 
@@ -85,14 +86,19 @@ int main() {
     createObjects();
     createShaders();
     
-    GLuint uniformProjection = 0, uniformModel = 0;
+    camera = Camera();
+    
+    GLuint uniformProjection = 0, uniformModel = 0, uniformView = 0;
     
     // create Projection
     glm::mat4 projection = glm::perspective(45.0f, mainWindow.getBufferWidth()/mainWindow.getBufferHeight(), 0.1f, 100.0f);
     
     // loop until the window is closed
     while(!mainWindow.getShouldClose()) {
+        
+        // get and handle user input
         glfwPollEvents();
+        camera.keyControl(mainWindow.getKeys());
         
         // clear the window
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -101,6 +107,7 @@ int main() {
         shaderList[0].useShader();
         uniformModel = shaderList[0].getModelLocation();
         uniformProjection = shaderList[0].getProjectionLocation();
+        uniformView = shaderList[0].getViewLocation();
         
         glm::mat4 model = glm::mat4(0.1);
         
@@ -112,6 +119,7 @@ int main() {
         model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f)); // usually scale 'first'
         glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
         glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection));
+        glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(camera.calculateViewMatrix()));
         
         meshList[0]->renderMesh();
         

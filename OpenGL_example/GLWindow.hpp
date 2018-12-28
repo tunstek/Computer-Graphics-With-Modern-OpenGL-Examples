@@ -21,10 +21,14 @@ public:
     
     int init();
     
-    GLfloat getBufferWidth() {return bufferWidth;}
-    GLfloat getBufferHeight() {return bufferHeight;}
+    GLfloat getBufferWidth() { return bufferWidth; }
+    GLfloat getBufferHeight() { return bufferHeight; }
     
-    bool getShouldClose() {return glfwWindowShouldClose(mainWindow);}
+    bool getShouldClose() { return glfwWindowShouldClose(mainWindow); }
+    
+    bool* getKeys() { return keys; }
+    GLfloat getDeltaMouseX();
+    GLfloat getDeltaMouseY();
     
     // swaps the buffers (one buffer to draw to [that the user cannot see] and the other that the user can currently see)
     void swapBuffers() { glfwSwapBuffers(mainWindow); }
