@@ -29,6 +29,9 @@ std::vector<Mesh*> meshList;
 std::vector<Shader> shaderList;
 Camera camera;
 
+GLfloat deltaTime = 0.0f;
+GLfloat lastTime = 0.0f;
+
 
 
 
@@ -96,9 +99,14 @@ int main() {
     // loop until the window is closed
     while(!mainWindow.getShouldClose()) {
         
+        GLfloat now = glfwGetTime();
+        deltaTime = now - lastTime;
+        lastTime = now;
+        
         // get and handle user input
         glfwPollEvents();
-        camera.keyControl(mainWindow.getKeys());
+        camera.keyControl(mainWindow.getKeys(), deltaTime);
+        camera.mouseControl(mainWindow.getDeltaMouseX(), mainWindow.getDeltaMouseY());
         
         // clear the window
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);

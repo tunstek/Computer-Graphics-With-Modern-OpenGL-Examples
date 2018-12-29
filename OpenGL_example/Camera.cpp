@@ -52,23 +52,48 @@ void Camera::update() {
 }
 
 
-void Camera::keyControl(bool *keys) {
+void Camera::keyControl(bool *keys, GLfloat deltaTime) {
+    GLfloat velocity = movementSpeed * deltaTime;
     if(keys[consts::DEFAULT_FORWARDS]) {
         // move forwards
-        position += front * movementSpeed;
+        // adds an upwards angle to the position so that we move in the direction we are looking, not relative to the ground
+        position += front * velocity;
     }
     if(keys[consts::DEFAULT_BACKWARDS]) {
         // move backwards
-        position -= front * movementSpeed;
+        position -= front * velocity;
     }
     if(keys[consts::DEFAULT_LEFT]) {
         // move left
-        position -= right * movementSpeed;
+        position -= right * velocity;
     }
     if(keys[consts::DEFAULT_RIGHT]) {
         // move right
-        position += right * movementSpeed;
+        position += right * velocity;
     }
+}
+
+
+void Camera::mouseControl(GLfloat deltaX, GLfloat deltaY) {
+    deltaX *= turnSpeed;
+    deltaY *= turnSpeed;
+    
+    yaw += deltaX;
+    pitch += deltaY;
+    
+    // limit the pitch so you can't look beyond directly up
+    if(pitch > 89.0f) {
+        // things get strange @ >= 90
+        pitch = 89.0f;
+    }
+    if(pitch < -89.0f) {
+        // things get strange @ >= 90
+        pitch = -89.0f;
+    }
+    
+    
+    // pitch and yaw have change therefore we need to update
+    update();
 }
 
 
