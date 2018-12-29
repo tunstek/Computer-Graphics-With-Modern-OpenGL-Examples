@@ -54,22 +54,31 @@ void Camera::update() {
 
 void Camera::keyControl(bool *keys, GLfloat deltaTime) {
     GLfloat velocity = movementSpeed * deltaTime;
-    if(keys[consts::DEFAULT_FORWARDS]) {
+    if(keys[consts::DEFAULT_FORWARDS_KEY]) {
         // move forwards
         // adds an upwards angle to the position so that we move in the direction we are looking, not relative to the ground
         position += front * velocity;
     }
-    if(keys[consts::DEFAULT_BACKWARDS]) {
+    if(keys[consts::DEFAULT_BACKWARDS_KEY]) {
         // move backwards
         position -= front * velocity;
     }
-    if(keys[consts::DEFAULT_LEFT]) {
+    if(keys[consts::DEFAULT_LEFT_KEY]) {
         // move left
         position -= right * velocity;
     }
-    if(keys[consts::DEFAULT_RIGHT]) {
+    if(keys[consts::DEFAULT_RIGHT_KEY]) {
         // move right
         position += right * velocity;
+    }
+    
+    if(keys[consts::DEFAULT_UP_KEY]) {
+        // move up
+        position += up * velocity;
+    }
+    if(keys[consts::DEFAULT_DOWN_KEY]) {
+        // move down
+        position -= up * velocity;
     }
 }
 

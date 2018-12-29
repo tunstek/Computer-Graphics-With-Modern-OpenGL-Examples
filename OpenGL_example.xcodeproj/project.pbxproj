@@ -12,6 +12,7 @@
 		5373705F21D3DC3B0027E27C /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5373705D21D3DC3B0027E27C /* Utils.cpp */; };
 		5373706721D4D7180027E27C /* GLWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5373706521D4D7180027E27C /* GLWindow.cpp */; };
 		5373706A21D649F60027E27C /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5373706821D649F60027E27C /* Camera.cpp */; };
+		5373707121D7AB570027E27C /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5373706F21D7AB570027E27C /* Texture.cpp */; };
 		53A7E555215159AA002CDA17 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 53A7E554215159AA002CDA17 /* main.cpp */; };
 		53A7E55D21515A6C002CDA17 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53A7E55C21515A6C002CDA17 /* OpenGL.framework */; };
 		53A7E55F21515A96002CDA17 /* libGLEW.2.1.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 53A7E55E21515A96002CDA17 /* libGLEW.2.1.0.dylib */; };
@@ -44,6 +45,11 @@
 		5373706821D649F60027E27C /* Camera.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Camera.cpp; sourceTree = "<group>"; };
 		5373706921D649F60027E27C /* Camera.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Camera.hpp; sourceTree = "<group>"; };
 		5373706C21D655080027E27C /* Consts.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Consts.hpp; sourceTree = "<group>"; };
+		5373706E21D7AAFA0027E27C /* stb_image.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
+		5373706F21D7AB570027E27C /* Texture.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Texture.cpp; sourceTree = "<group>"; };
+		5373707021D7AB570027E27C /* Texture.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Texture.hpp; sourceTree = "<group>"; };
+		5373707421D7B3A20027E27C /* brick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = brick.png; path = OpenGL_example/textures/brick.png; sourceTree = SOURCE_ROOT; };
+		5373707521D7B3A20027E27C /* dirt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dirt.png; path = OpenGL_example/textures/dirt.png; sourceTree = SOURCE_ROOT; };
 		53A7E551215159AA002CDA17 /* OpenGL GLFW */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "OpenGL GLFW"; sourceTree = BUILT_PRODUCTS_DIR; };
 		53A7E554215159AA002CDA17 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		53A7E55C21515A6C002CDA17 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
@@ -74,6 +80,15 @@
 			path = shaders;
 			sourceTree = "<group>";
 		};
+		5373707321D7B2ED0027E27C /* textures */ = {
+			isa = PBXGroup;
+			children = (
+				5373707421D7B3A20027E27C /* brick.png */,
+				5373707521D7B3A20027E27C /* dirt.png */,
+			);
+			path = textures;
+			sourceTree = "<group>";
+		};
 		53A7E548215159AA002CDA17 = {
 			isa = PBXGroup;
 			children = (
@@ -95,18 +110,22 @@
 			isa = PBXGroup;
 			children = (
 				53A7E554215159AA002CDA17 /* main.cpp */,
+				5373706F21D7AB570027E27C /* Texture.cpp */,
+				5373707021D7AB570027E27C /* Texture.hpp */,
 				5373706521D4D7180027E27C /* GLWindow.cpp */,
 				5373706821D649F60027E27C /* Camera.cpp */,
 				5373706921D649F60027E27C /* Camera.hpp */,
 				5373706621D4D7180027E27C /* GLWindow.hpp */,
+				5373706E21D7AAFA0027E27C /* stb_image.h */,
 				5373705D21D3DC3B0027E27C /* Utils.cpp */,
 				5373705E21D3DC3B0027E27C /* Utils.hpp */,
 				5373705721D3D2AA0027E27C /* Shader.cpp */,
 				5373705821D3D2AA0027E27C /* Shader.hpp */,
 				5373705421D384480027E27C /* Mesh.cpp */,
 				5373705521D384480027E27C /* Mesh.hpp */,
-				5373705A21D3DABD0027E27C /* shaders */,
 				5373706C21D655080027E27C /* Consts.hpp */,
+				5373705A21D3DABD0027E27C /* shaders */,
+				5373707321D7B2ED0027E27C /* textures */,
 			);
 			path = OpenGL_example;
 			sourceTree = "<group>";
@@ -178,6 +197,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5373705621D384480027E27C /* Mesh.cpp in Sources */,
+				5373707121D7AB570027E27C /* Texture.cpp in Sources */,
 				5373705921D3D2AA0027E27C /* Shader.cpp in Sources */,
 				5373706721D4D7180027E27C /* GLWindow.cpp in Sources */,
 				53A7E555215159AA002CDA17 /* main.cpp in Sources */,

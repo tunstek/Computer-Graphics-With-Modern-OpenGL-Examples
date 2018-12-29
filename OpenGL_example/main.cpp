@@ -1,3 +1,6 @@
+// stb
+#define STB_IMAGE_IMPLEMENTATION
+
 #include <iostream>
 #include <string.h>
 #include <cmath>
@@ -14,10 +17,12 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtx/string_cast.hpp>
 
+
 #include "GLWindow.hpp"
 #include "Mesh.hpp"
 #include "Shader.hpp"
 #include "Camera.hpp"
+#include "Texture.hpp"
 #include "Utils.hpp"
 
 
@@ -28,6 +33,8 @@ const GLint WINDOW_WIDTH = 800, WINDOW_HEIGHT = 600;
 std::vector<Mesh*> meshList;
 std::vector<Shader> shaderList;
 Camera camera;
+
+Texture brickTexture, dirtTexture;
 
 GLfloat deltaTime = 0.0f;
 GLfloat lastTime = 0.0f;
@@ -53,22 +60,23 @@ void createObjects() {
     
     unsigned int indices[] = {
         0, 3, 1, // side 1
-        1, 3, 3, // side 2
-        2, 3, 1, // front facing triangle
+        1, 3, 2, // side 2
+        2, 3, 0, // front facing triangle
         0, 1, 2  // base of triange
     };
     
     // center of screen is 0.0
     GLfloat vertices[] = {
-        -1.0f, -1.0f, 0.0f,
-        0.0f, -1.0f, 1.0f,
-        1.0f, -1.0f, 0.0f,
-        0.0f, 1.0f, 0.0f
+    //     x,    y,    z,       u,    v
+        -1.0f, -1.0f, 0.0f,    0.0f, 0.0f,
+         0.0f, -1.0f, 1.0f,    0.5f, 0.0f,
+         1.0f, -1.0f, 0.0f,    1.0f, 0.0f,
+         0.0f,  1.0f, 0.0f,    0.5f, 1.0f
     };
     
     
     Mesh *obj1 = new Mesh();
-    obj1->createMesh(vertices, indices, 12, 12);
+    obj1->createMesh(vertices, indices, 20, 12);
     meshList.push_back(obj1);
     
 }
@@ -90,6 +98,11 @@ int main() {
     createShaders();
     
     camera = Camera();
+    
+    brickTexture = Texture("textures/brick.png");
+    brickTexture.loadTexture();
+    dirtTexture = Texture("textures/dirt.png");
+    dirtTexture.loadTexture();
     
     GLuint uniformProjection = 0, uniformModel = 0, uniformView = 0;
     
@@ -128,6 +141,8 @@ int main() {
         glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
         glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection));
         glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(camera.calculateViewMatrix()));
+        
+        brickTexture.useTexture();
         
         meshList[0]->renderMesh();
         

@@ -25,12 +25,14 @@ namespace consts {
     
     
     // movement
-    const GLint DEFAULT_FORWARDS = GLFW_KEY_W;
-    const GLint DEFAULT_BACKWARDS = GLFW_KEY_S;
-    const GLint DEFAULT_LEFT = GLFW_KEY_A;
-    const GLint DEFAULT_RIGHT = GLFW_KEY_D;
-    const GLfloat DEFAULT_MOVEMENT_SPEED = 1;
-    const GLfloat DEFAULT_TURNING_SPEED = 1;
+    const GLint DEFAULT_FORWARDS_KEY = GLFW_KEY_W;
+    const GLint DEFAULT_BACKWARDS_KEY = GLFW_KEY_S;
+    const GLint DEFAULT_LEFT_KEY = GLFW_KEY_A;
+    const GLint DEFAULT_RIGHT_KEY = GLFW_KEY_D;
+    const GLint DEFAULT_UP_KEY = GLFW_KEY_SPACE;
+    const GLint DEFAULT_DOWN_KEY = GLFW_KEY_LEFT_SHIFT;
+    const GLfloat DEFAULT_MOVEMENT_SPEED = 1.0f;
+    const GLfloat DEFAULT_TURNING_SPEED = 0.5f;
 };
 
 

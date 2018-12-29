@@ -31,8 +31,13 @@ void Mesh::createMesh(GLfloat *vertices, unsigned int *indices, unsigned int num
     glBindBuffer(GL_ARRAY_BUFFER, VBO); // bind the buffers
     
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices[0])*numOfVertices, vertices, GL_STATIC_DRAW); // not changing the values in the array
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0); // chunks of 3 values
+    
+    //set vertex coordinates
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vertices[0])*5, 0); // chunks of 5 values! 3 for vertex cordinates and 2 for texel coordinates
     glEnableVertexAttribArray(0);
+    // set texture coordinates
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(vertices[0])*5, (void*)(sizeof(vertices[0])*3));
+    glEnableVertexAttribArray(1);
     
     // unbind array buffer
     glBindBuffer(GL_ARRAY_BUFFER, 0);
